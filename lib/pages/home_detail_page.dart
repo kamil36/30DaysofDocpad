@@ -12,7 +12,7 @@ class HomeDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(backgroundColor: Colors.transparent),
       backgroundColor: MyTheme.creamColor,
       bottomNavigationBar: Container(
         color: Colors.white,
@@ -24,14 +24,11 @@ class HomeDetailPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {},
               style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    MyTheme.darkBluishColor,
-                  ),
-                  shape: MaterialStateProperty.all(
-                    StadiumBorder(),
-                  )),
-              child: "Buy".text.make(),
-            ).wh(100, 50)
+                  backgroundColor:
+                      MaterialStateProperty.all(MyTheme.darkBluishColor),
+                  shape: MaterialStateProperty.all(StadiumBorder())),
+              child: "Add to cart".text.make(),
+            ).wh(120, 50)
           ],
         ).p32(),
       ),
@@ -59,6 +56,11 @@ class HomeDetailPage extends StatelessWidget {
                         .make(),
                     catalog.desc.text.textStyle(context.captionStyle).xl.make(),
                     10.heightBox,
+                    "Ipsum nonumy est takimata et elitr. Amet eos eirmod aliquyam sed amet dolor sed amet et, est aliquyam lorem sit erat sed consetetur, diam et ipsum labore dolores nonumy, et dolor kasd et sit ipsum eirmod vero lorem, voluptua tempor accusam nonumy consetetur labore diam dolore magna. Ipsum eos dolores."
+                        .text
+                        .textStyle(context.captionStyle)
+                        .make()
+                        .p16()
                   ],
                 ).py64(),
               ),
