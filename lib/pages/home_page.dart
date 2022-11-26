@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         body: SafeArea(
           child: Container(
             padding: Vx.m32,
-            child: Column(
+            child: Column( 
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CatalogHeader(),
