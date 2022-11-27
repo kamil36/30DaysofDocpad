@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:docpad/utils/widgets/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -8,7 +10,7 @@ class CatalogHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        "Catalog App".text.xl5.bold.color(MyTheme.darkBluishColor).make(),
+        "Catalog App".text.xl5.bold.color(context.theme.accentColor).make(),
         "Trending products".text.xl2.make(),
       ],
     );
