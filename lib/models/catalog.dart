@@ -3,16 +3,14 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 
 class CatalogModel {
-  static List<Item> items = [
-    Item(
-      id: 1,
-      name: "iPhone 12 Pro",
-      desc: "Apple iPhone 12th Generation",
-      price: 10500,
-      color: "Red",
-      image: "assets/catalogimages/iphone12pro.jpg",
-    )
-  ];
+  static List<Item> items = [];
+
+  // Get Item by ID
+  static Item getById(int id) =>
+      items.firstWhere((element) => element.id == id, orElse: null);
+
+  // Get Item by Position
+  static Item getByPosition(int pos) => items[pos];
 }
 
 class Item {
