@@ -1,8 +1,13 @@
 import 'package:docpad/models/catalog.dart';
 
 class CartModel {
+  static final CartModel cartModel = CartModel._internal();
+
+  factory CartModel() => cartModel;
+  CartModel._internal();
+
   // catalog field
-  CatalogModel _catalog;
+  late CatalogModel _catalog;
 
   // Collection of IDs - store Ids of each item
   final List<int> _itemIds = [];
@@ -23,12 +28,12 @@ class CartModel {
       items.fold(0, (total, current) => total + current.price);
 
   //Add Item
-  void add (Item item){
+  void add(Item item) {
     _itemIds.add(item.id);
   }
 
   //Remove Item
-  void remove(Item item){
+  void remove(Item item) {
     _itemIds.remove(item.id);
   }
 }
