@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_key_in_widget_constructors, prefer_const_constructors, use_build_context_synchronously
 
 import 'package:docpad/utils/routes.dart';
 import 'package:flutter/material.dart';

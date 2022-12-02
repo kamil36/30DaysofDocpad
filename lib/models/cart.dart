@@ -1,11 +1,8 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:docpad/models/catalog.dart';
 
 class CartModel {
-  static final CartModel cartModel = CartModel._internal();
-
-  factory CartModel() => cartModel;
-  CartModel._internal();
-
   // catalog field
   late CatalogModel _catalog;
 

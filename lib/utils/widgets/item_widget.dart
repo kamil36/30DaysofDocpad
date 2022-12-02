@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison, avoid_print
+
 import 'package:flutter/material.dart';
 
 import '../../models/catalog.dart';
@@ -21,6 +23,7 @@ class ItemWidget extends StatelessWidget {
         trailing: Text(
           "\$${item.price}",
           textScaleFactor: 1.5,
+          // ignore: prefer_const_constructors
           style: TextStyle(
             color: Colors.deepPurple,
             fontWeight: FontWeight.bold,

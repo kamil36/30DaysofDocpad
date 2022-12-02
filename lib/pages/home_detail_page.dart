@@ -1,8 +1,7 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, must_be_immutable, non_constant_identifier_names, unnecessary_null_comparison
 
 import 'package:docpad/models/catalog.dart';
 import 'package:docpad/utils/widgets/home_widgets/add_to_cart.dart';
-import 'package:docpad/utils/widgets/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 

@@ -1,14 +1,8 @@
+// ignore_for_file: null_closures, avoid_renaming_method_parameters
+
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
-
 class CatalogModel {
-  static final catModel = CatalogModel._internal();
-
-  CatalogModel._internal();
-
-  factory CatalogModel() => catModel;
-
   static List<Item> items = [];
 
   // Get Item by ID

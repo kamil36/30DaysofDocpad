@@ -1,11 +1,10 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_key_in_widget_constructors, prefer_const_constructors, unnecessary_null_comparison
 
 import 'package:docpad/utils/routes.dart';
 import 'package:docpad/utils/widgets/home_widgets/catalog_header.dart';
 import 'package:docpad/utils/widgets/home_widgets/catalog_list.dart';
-import 'package:docpad/utils/widgets/themes.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:docpad/models/catalog.dart';
