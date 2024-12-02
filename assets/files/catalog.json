@@ -1,0 +1,20 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "Name": "iPhone 12 Pro",
+            "desc": "Apple iPhone 12th Generation",
+            "price": 10500,
+            "color": "Red",
+            "image": "assets/catalogimages/iphone12pro.jpg"
+        },
+        {
+            "id": 2,
+            "Name": "Computer",
+            "desc": "I10 8gb RAM 1tb HHD",
+            "price": 40000,
+            "color": "Black",
+            "image": "assets/catalogimages/Computer.jpg"
+        }
+    ]
+}
