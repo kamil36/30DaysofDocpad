@@ -7,7 +7,6 @@ import 'package:docpad/utils/widgets/home_widgets/catalog_header.dart';
 import 'package:docpad/utils/widgets/home_widgets/catalog_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:docpad/models/catalog.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -19,11 +18,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final int days = 30;
-
   final String name = "Docpad";
+  final String url = "https://fakestoreapi.com/products";
 
-  final url = "https://api.jsonbin.io/v3/b/639348c2c5b3a64f1bc77b00";
+  bool _isLoading = true; // Tracks whether data is being loaded
+  String? _errorMessage; // Stores error messages, if any
 
   @override
   void initState() {
@@ -31,62 +30,89 @@ class _HomePageState extends State<HomePage> {
     loadData();
   }
 
-  loadData() async {
-    await Future.delayed(Duration(seconds: 2));
-    // final catalogJson =
-    //     await rootBundle.loadString("assets/files/catalog.json");
+  Future<void> loadData() async {
+    try {
+      await Future.delayed(Duration(seconds: 2)); // Simulating network delay
+      final response = await http.get(Uri.parse(url));
 
-    final response = await http.get(Uri.parse(url));
-    final catalogJson = response.body;
+      if (response.statusCode == 200) {
+        final catalogJson = response.body;
+        final decodedData = jsonDecode(catalogJson);
+        var productsData = decodedData;
 
-    final decodedData = jsonDecode(catalogJson);
-    var productsData = decodedData["products"];
-    CatalogModel.items = List.from(productsData)
-        .map<Item>((item) => Item.fromMap(item))
-        .toList();
-    CatalogModel.items = List.from(productsData)
-        .map<Item>((item) => Item.fromMap(item))
-        .toList();
-    setState(() {});
+        CatalogModel.items = List.from(productsData)
+            .map<Item>((item) => Item.fromJson(item)) // Fixed Item.fromJson
+            .toList();
+      } else {
+        throw Exception('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      _errorMessage = e.toString();
+    } finally {
+      setState(() {
+        _isLoading = false; // Loading is complete, whether successful or not
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final _cart = (VxState.store as MyStore).cart;
+
     return Scaffold(
-        backgroundColor: context.cardColor,
-        floatingActionButton: VxBuilder(
-          mutations: {AddMutation, RemoveMutation},
-          builder: (ctx, _, user) => FloatingActionButton(
-            onPressed: () => Navigator.pushNamed(context, MyRoutes.cartRoute),
-            backgroundColor: context.theme.buttonColor,
-            child: Icon(
-              CupertinoIcons.cart,
-              color: Colors.white,
-            ),
-          ).badge(
-              color: Vx.gray200,
-              size: 22,
-              count: _cart!.items.length,
-              textStyle: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              )),
-        ),
-        body: SafeArea(
-          child: Container(
-            padding: Vx.m32,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CatalogHeader(),
-                if (CatalogModel.items != null && CatalogModel.items.isNotEmpty)
-                  CatalogList().py16().expand()
-                else
-                  CircularProgressIndicator().centered().py16().expand(),
-              ],
-            ),
+      backgroundColor: context.cardColor,
+      floatingActionButton: VxBuilder(
+        mutations: {AddMutation, RemoveMutation},
+        builder: (ctx, _, user) => FloatingActionButton(
+          onPressed: () => Navigator.pushNamed(context, MyRoutes.cartRoute),
+          backgroundColor: context.theme.canvasColor,
+          child: Icon(
+            CupertinoIcons.cart,
+            color: Colors.white,
           ),
-        ));
+        ).badge(
+          color: Vx.gray200,
+          size: 22,
+          count: _cart?.items.length ?? 0, // Safe null-check here
+          textStyle: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: Container(
+          padding: Vx.m32,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CatalogHeader(),
+              Expanded(
+                child: _isLoading
+                    ? CircularProgressIndicator().centered()
+                    : _errorMessage != null
+                        ? Center(
+                            child: Text(
+                              _errorMessage!,
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 16,
+                              ),
+                            ),
+                          )
+                        : CatalogModel.items.isNotEmpty
+                            ? CatalogList().py16()
+                            : Center(
+                                child: Text(
+                                  "No products available",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
