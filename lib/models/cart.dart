@@ -20,7 +20,16 @@ class CartModel {
   }
 
   // Get items in the cart
-  List<Item> get items => _itemIds.map((id) => _catalog.getById(id)).toList();
+  List<Item> get items => _itemIds
+      .map((id) =>
+          _catalog.getById(id) ??
+          Item(
+              id: -1,
+              title: "Unknown",
+              description: "Not Found",
+              price: 0.0,
+              image: ""))
+      .toList();
 
   // Get total price
   num get totalPrice =>

@@ -1,103 +1,56 @@
-// ignore_for_file: null_closures, avoid_renaming_method_parameters
-
-import 'dart:convert';
-
 class CatalogModel {
+  // Static list to hold catalog items
   static List<Item> items = [];
 
-  // Get Item by ID
-  Item getById(int id) =>
-      items.firstWhere((element) => element.id == id, orElse: null);
+  // Get an item by ID, returns null if not found
+  Item? getById(int id) {
+    try {
+      return items.firstWhere((item) => item.id == id);
+    } catch (e) {
+      return null; // Return null if not found
+    }
+  }
 
-  // Get Item by Position
-  Item getByPosition(int pos) => items[pos];
+  // Get an item by position, throws exception if position is invalid
+  Item getByPosition(int pos) {
+    if (pos < 0 || pos >= items.length) {
+      throw IndexError(pos, items); // Throws error if position is out of bounds
+    }
+    return items[pos];
+  }
 }
 
+// Model for individual catalog items
 class Item {
   final int id;
-  final String name;
-  final String desc;
-  final num price;
-  final String color;
+  final String title;
+  final String description;
+  final double price;
   final String image;
+
   Item({
     required this.id,
-    required this.name,
-    required this.desc,
+    required this.title,
+    required this.description,
     required this.price,
-    required this.color,
     required this.image,
   });
 
-  Item copyWith({
-    int? id,
-    String? name,
-    String? desc,
-    num? price,
-    String? color,
-    String? image,
-  }) {
-    return Item(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      desc: desc ?? this.desc,
-      price: price ?? this.price,
-      color: color ?? this.color,
-      image: image ?? this.image,
-    );
-  }
+  // Convert Item to JSON
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "description": description,
+        "price": price,
+        "image": image,
+      };
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'desc': desc,
-      'price': price,
-      'color': color,
-      'image': image,
-    };
-  }
-
-  factory Item.fromMap(Map<String, dynamic> map) {
-    return Item(
-      id: map['id'],
-      name: map['name'],
-      desc: map['desc'],
-      price: map['price'],
-      color: map['color'],
-      image: map['image'],
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Item.fromJson(String source) => Item.fromMap(json.decode(source));
-
-  @override
-  String toString() {
-    return 'Item(id: $id, name: $name, desc: $desc, price: $price, color: $color, image: $image)';
-  }
-
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-
-    return o is Item &&
-        o.id == id &&
-        o.name == name &&
-        o.desc == desc &&
-        o.price == price &&
-        o.color == color &&
-        o.image == image;
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^
-        name.hashCode ^
-        desc.hashCode ^
-        price.hashCode ^
-        color.hashCode ^
-        image.hashCode;
-  }
+  // Create Item from JSON
+  factory Item.fromJson(Map<String, dynamic> json) => Item(
+        id: json["id"],
+        title: json["title"],
+        description: json["description"],
+        price: json["price"].toDouble(),
+        image: json["image"],
+      );
 }

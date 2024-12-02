@@ -51,14 +51,13 @@ class CatalogList extends StatelessWidget {
 class CatalogItem extends StatelessWidget {
   final Item catalog;
 
-  const CatalogItem({Key? key, required this.catalog})
-      : assert(catalog != null),
-        super(key: key);
+  const CatalogItem({Key? key, required this.catalog}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var children2 = [
       Hero(
-        tag: Key(catalog.id.toString()),
+        tag: catalog.id.toString(), // Simplified to use the id directly
         child: CatalogImage(
           image: catalog.image,
         ),
@@ -68,21 +67,22 @@ class CatalogItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            catalog.name.text.lg.color(context.accentColor).bold.make(),
-            catalog.desc.text.textStyle(context.captionStyle).make(),
+            catalog.title.text.lg.color(context.accentColor).bold.make(),
+            catalog.description.text.textStyle(context.captionStyle).make(),
             10.heightBox,
-            ButtonBar(
+            OverflowBar(
+              // Replaced ButtonBar with OverflowBar
               alignment: MainAxisAlignment.spaceBetween,
-              buttonPadding: EdgeInsets.zero,
               children: [
                 "\$${catalog.price}".text.bold.xl.make(),
-                AddToCart(catalog: catalog)
+                AddToCart(catalog: catalog),
               ],
             ).pOnly(right: 8.0)
           ],
         ).p(context.isMobile ? 0 : 16),
-      )
+      ),
     ];
+
     return VxBox(
       child: context.isMobile
           ? Row(

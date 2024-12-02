@@ -7,13 +7,13 @@ class CatalogImage extends StatelessWidget {
   const CatalogImage({super.key, required this.image});
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
+    return Image.network(
       image,
     )
         .box
         .rounded
         .p8
-        .color(context.canvasColor)
+        .color(context.accentColor)
         .make()
         .p16()
         .wPCT(context: context, widthPCT: context.isMobile ? 40 : 20);
