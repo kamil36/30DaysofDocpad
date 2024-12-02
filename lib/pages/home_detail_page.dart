@@ -30,7 +30,7 @@ class HomeDetailPage extends StatelessWidget {
           children: [
             Hero(
               tag: Key(catalog.id.toString()),
-              child: Image.asset(catalog.image),
+              child: Image.network(catalog.image),
             ).h32(context),
             Expanded(
               child: VxArc(

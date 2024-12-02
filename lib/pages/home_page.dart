@@ -60,12 +60,12 @@ class _HomePageState extends State<HomePage> {
     final _cart = (VxState.store as MyStore).cart;
 
     return Scaffold(
-      backgroundColor: context.cardColor,
+      backgroundColor: context.isDarkMode ? Colors.black : Colors.grey[200],
       floatingActionButton: VxBuilder(
         mutations: {AddMutation, RemoveMutation},
         builder: (ctx, _, user) => FloatingActionButton(
           onPressed: () => Navigator.pushNamed(context, MyRoutes.cartRoute),
-          backgroundColor: context.theme.canvasColor,
+          backgroundColor: context.theme.focusColor,
           child: Icon(
             CupertinoIcons.cart,
             color: Colors.white,
